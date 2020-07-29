@@ -1,0 +1,94 @@
+2020-07-16
+	1、控件高度设置"0px"并添加顶部和底部约束后空间会自适应高度
+
+
+2020-07-21
+	1、什么是匿名内部类
+	2、lambda表达式
+	3、数据存储及持久化
+	4、http连接、okhttp库
+		okHttp3会默认使用密文传输，当使用http（明文传输）时会自动报错，所以要用https；
+		或者手动修改配置使okHttp3允许明文传输。（https://blog.csdn.net/AlexYoung28/article/details/82728946）
+	5、kotlin中is、！is、as、as？的意义
+	
+	
+2020-07-21
+	1、fragment的onCreateView创建view并将返回的view添加到指定activity中。onViewCreated会在之后马上执行。所以activity级的对
+		fragment的调用应该放在onViewCreated，因为onCreateView执行的时候布局还未放置在相关activity中，activity找不到相关布局。
+		
+		
+2020-07-27
+	1、函数式编程：函数式编程是编程范式的一种，最常见的编程范式是命令式编程，如面向过程、面向对象编程。函数式编程里，一切
+		都是数学函数。函数式编程语言也可以有对象，但是这些对象是不可变的--要么是函数参数要么是返回值。函数式编程里没有for
+		循环，而是通过递归，把函数当成参数传递的方式进行循环效果。（Java 8开始支持函数式编程，通过lambda表达式实现）
+		
+		特点：一切皆函数，一切数据皆不可变，一切计算都是函数作用在不可变数据上产生新的不可变数据的过程。
+		
+		a、lambda表达式：对特定接口的匿名实现类语法的简写
+		b、函数式接口：接口中只有一个抽象方法的接口。由于java中Object是任意类或接口的父类，所以该抽象方法的签名不能与Object中
+					的方法一样，接口中可以有非抽象方法。可以在接口上加@FunctionalInterface注解，编译器会自动检查接口是否符
+					合函数式接口的规范。
+		c、方法引用：若lanbda表达式只是调用某个方法，则可以写成方法引用。
+			方法引用语法：
+				静态方法引用：ClassName::methodName
+				实例上的实例方法引用：instanceReference::methodName
+				父类的实例方法引用：super::methodName
+				类型上的实例方法引用：ClassName::methodName
+				构造方法引用：Class::new
+				数组构造方法引用：TypeName[]::new
+				
+	2、fragment的生命周期
+		a、fragment的状态和回调：每一个Activity在其生命周期内都可能会有四种状态：运行、暂停、停止、销毁。fragment也与之类似。
+			运行状态：当一个fragment所关联的activity正处于运行状态时，该fragment也会处于运行状态。
+			暂停状态：当一个activity处于暂停状态时，与之关联的fragment也会暂停。
+			停止状态：当一个activity停止时，与之关联的fragment就会停止，或者通过FragmentTransaction的remove(),replace()方法将
+						fragment从activity中移除，但在事务提交之前调用了addToBackStack()方法，这时fragment也会被停止。总的来说，
+						进入停止状态的fragment对用户不可见，且可能被系统回收。
+			销毁状态：fragment依赖于activity而存在，所以当activity被销毁时，fragment也会被销毁。或者可以通过FragmentTransaction
+						的remove(),replace()方法将fragment从activity中移除，但在事务提交之前没有调用addToBackStack()方法，
+						这时fragment也会进入销毁状态。
+						
+	3、Activity的生命周期
+		运行状态：activity位于返回栈的栈顶。（系统最不愿回收，会影响用户体验）
+		暂停状态：activity不在处于栈顶但依然可见。（系统也不愿回收，只有在内存极低的情况下才会被考虑回收）
+		停止状态；activity不处于栈顶且完全不可见。（有可能会被系统回收）
+		销毁状态：activity从返回栈中移除。（系统最倾向回收哦，以保证手机内存充足）
+		
+		生存期回调：
+			onCreate()：activity第一次被创建时调用。在这个方法中完成初始化操作，如加载布局、绑定事件等。
+			onStart()：当activity由不可见变为可见时调用。
+			onResume()：当activity准备和用户交互时调用，此时activity一定位于返回栈栈顶且处于运行状态。
+			onPause()：当系统准备去启动或恢复另一个activity时调用。通常在这个方法里释放一些消耗CPU资源的内存，并保存一些关键数据。
+			onStop()：当activity完全不可见时调用。它和onPause()的区别主要在于：当启动的新activity是一个对话式的activity时，会执行
+						onPause()而不是onStop()。
+			onDestroy()：当activity被销毁之前调用，之后activity处于销毁状态。
+			onRestart()：当activity由停止状态变为运行状态时调用，即重启activity。
+			
+		可分为三种生存期：
+			完整生存期：activity在onCreate()和onDestroy()之间所经历的就是完整生存期。对activity进行加载时的各种初始化操作和销毁前
+						的内存释放操作。
+			可见生存期：activity在onStart()和onStop()之间所经历的就是可见生存期。此时activity总是对用户可见，但不一定能交互。可以
+						管理那些对用户可见的资源的加载和释放。保证停止状态不会占用过多内存。
+			前台生存期：activity在onResume()和onPause()之间所经历的就是前台生存期。在前台生存期，activity总是处于运行状态。
+			
+	4、finish()、onDestroy()和System.exit()的区别
+		finish()：只是将activity移出栈，但并没有及时调用onDestroy()方法，占用的资源也未及时释放。会由系统决定何时释放资源，当内存紧缺时
+					按优先级释放。
+		onDestroy()：系统销毁此activity在内存中的实例，再次进入此activity时，必须重新创建，执行onCreate()。
+		System.exit(0)：系统针对整个application，将进程杀掉。
+		
+		finish()用于结束一个activity的生命周期。而onDestroy()是生命周期的一个方法，作用是在一个activity被销毁之前，释放之前此
+				activity所占用的资源。onDestroy()是一个activity生命周期的最后一步，会回收资源空间。finish()也会调用到onDestroy()。
+				
+	5、方法签名：方法签名由方法名称和参数列表组成（参数的类型和顺序）。
+		
+		
+2020-07-28
+	1、Android有关布局的单位大部分是dp，代码中的单位大部分是px。
+	
+	
+2020-07-29
+	1、关于之前git无法拉去远程分支
+		要先在github的设置里将本地ssh key添加进去，这样此电脑才能访问指定的github。
+	2、本地代码提交不成功问题：远程分支有ReadMe文档本地没有，所以push不成功。可以使用pull -rebase，可以将远程的内容合并到本地
+		仓库（pull = fetch + merge）。
