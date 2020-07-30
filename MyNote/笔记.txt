@@ -92,3 +92,11 @@
 		要先在github的设置里将本地ssh key添加进去，这样此电脑才能访问指定的github。
 	2、本地代码提交不成功问题：远程分支有ReadMe文档本地没有，所以push不成功。可以使用pull -rebase，可以将远程的内容合并到本地
 		仓库（pull = fetch + merge）。
+		
+		
+2020-07-30		
+	1、ViewModel：将数据存入viewmodel，可保证在切换activity时保留数据，在activity下次展示时恢复数据。
+	2、EventBus：a、不应该在onCreated里面注册，EventBus是用来做Activity之间的通信的，当一个Activity还未生成或者未在栈中时，是收发不了消息的。
+				b、EventBus也不应该在onStop中注销，因为此时Activity还在栈中，只是未显示出来，如果注销的话将收不到信息。应该在onDestroy中注销。
+				c、onEvent()方法里面接受的post过来的参数类型应该是一个对象。（如：int不行，Integer可以）
+				d、在注册消息的时候要给坚挺的对象赋初值，以免如网络请求等出问题拿不到数据的时候出现应用之类的情况。
