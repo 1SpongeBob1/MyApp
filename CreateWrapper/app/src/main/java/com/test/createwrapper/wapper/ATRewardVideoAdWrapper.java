@@ -61,14 +61,18 @@ public class ATRewardVideoAdWrapper {
     }
 
     public boolean isReady(){
-        if (videoAd.isAdReady()){
-            return true;
-        }else {
-            return false;
-        }
+        return videoAd.isAdReady();
     }
 
     public void show(){
         videoAd.show();
     }
+
+    public void load(){
+        videoAd.load();
+    }
+
+//    public void onDestroy(){
+//        videoAd.onDestory();
+//    }
 }

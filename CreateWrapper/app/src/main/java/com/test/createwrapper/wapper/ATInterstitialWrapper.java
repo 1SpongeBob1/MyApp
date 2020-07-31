@@ -60,11 +60,7 @@ public class ATInterstitialWrapper {
     }
 
     public boolean isReady(){
-        if (interstitialAd.isAdReady()){
-            return true;
-        }else {
-            return false;
-        }
+        return interstitialAd.isAdReady();
     }
 
     public void load(){
