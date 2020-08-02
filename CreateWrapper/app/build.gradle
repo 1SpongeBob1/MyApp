@@ -25,6 +25,12 @@ android {
         enabled = true
     }
 
+    sourceSets {
+        main {
+            res.srcDirs += '../app/topon_res'
+        }
+    }
+
 }
 
 dependencies {
@@ -36,14 +42,22 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    //Anythink（Necessary）
-    implementation 'com.anythink.sdk:core:5.5.8'
-    implementation 'com.anythink.sdk:tramini-plugin:5.5.8'
-    implementation 'com.anythink.sdk:nativead:5.5.8'
-    implementation 'com.anythink.sdk:banner:5.5.8'
-    implementation 'com.anythink.sdk:interstitial:5.5.8'
-    implementation 'com.anythink.sdk:rewardedvideo:5.5.8'
-    implementation 'com.anythink.sdk:splash:5.5.8'
-    implementation 'com.anythink.sdk:headbidding:5.5.8'
-    //Androidx（Necessary）
+//    //Anythink（Necessary）
+//    implementation 'com.anythink.sdk:core:5.5.8'
+//    implementation 'com.anythink.sdk:tramini-plugin:5.5.8'
+//    implementation 'com.anythink.sdk:nativead:5.5.8'
+//    implementation 'com.anythink.sdk:banner:5.5.8'
+//    implementation 'com.anythink.sdk:interstitial:5.5.8'
+//    implementation 'com.anythink.sdk:rewardedvideo:5.5.8'
+//    implementation 'com.anythink.sdk:splash:5.5.8'
+//    implementation 'com.anythink.sdk:headbidding:5.5.8'
+//    //Androidx（Necessary）
+//
+    api fileTree(include: ['*.jar','*.aar'], dir: 'topon_libs')
+//
+//    api 'androidx.appcompat:appcompat:1.0.0'
+//
+//    //Androidx（Necessary）
+//    api 'androidx.appcompat:appcompat:1.1.0'
+//    api 'androidx.browser:browser:1.0.0'
 }

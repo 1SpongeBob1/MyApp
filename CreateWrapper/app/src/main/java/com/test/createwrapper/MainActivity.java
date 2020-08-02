@@ -2,12 +2,16 @@ package com.test.createwrapper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Application;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 
 import com.anythink.banner.api.ATBannerListener;
 import com.anythink.core.api.ATAdInfo;
+import com.anythink.core.api.ATSDK;
 import com.anythink.core.api.AdError;
 import com.anythink.interstitial.api.ATInterstitialListener;
 import com.anythink.rewardvideo.api.ATRewardVideoListener;
@@ -28,11 +32,24 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //Android 9及以上必须设置
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            String processName = Application.getProcessName();
+            if (!getPackageName().equals(processName)) {
+                WebView.setDataDirectorySuffix(processName);
+            }
+        }
+
+
+        ATSDK.integrationChecking(this);
+        ATSDK.init(getApplicationContext(), "a5aa1f9deda26d", "4f7b9ac17decb9babec83aac078742c7");
+        ATSDK.setNetworkLogDebug(true);
+
         binding.bannerAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ATBannerViewWrapper wrapper = new ATBannerViewWrapper(MainActivity.this);
-                wrapper.setUnitID("b5baca41a2536f");
+                wrapper.setUnitID("b5c0508c4c073f");
                 wrapper.setListener(new ATBannerListener() {
                     @Override
                     public void onBannerLoaded() {
@@ -77,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         binding.interstitialAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ATInterstitialWrapper wrapper = new ATInterstitialWrapper(MainActivity.this, "b5baca54674522");
+                ATInterstitialWrapper wrapper = new ATInterstitialWrapper(MainActivity.this, "b5c0508e2c84d4");
                 wrapper.setListener(new ATInterstitialListener() {
                     @Override
                     public void onInterstitialAdLoaded() {
@@ -128,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         binding.rewardAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ATRewardVideoAdWrapper wrapper = new ATRewardVideoAdWrapper(MainActivity.this, "b5b449f025ec7c");
+                ATRewardVideoAdWrapper wrapper = new ATRewardVideoAdWrapper(MainActivity.this, "b5c2c800fb3a52");
                 wrapper.setListener(new ATRewardVideoListener() {
                     @Override
                     public void onRewardedVideoAdLoaded() {
