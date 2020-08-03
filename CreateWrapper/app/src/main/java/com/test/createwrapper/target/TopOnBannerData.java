@@ -66,49 +66,6 @@
 //    public void loadNative(NativeLoadAdListener loadNativeAdListener) {
 //        super.loadNative(loadNativeAdListener);
 //
-//
-//        ATBannerViewWrapper wrapper = new ATBannerViewWrapper(this);
-//        wrapper.setUnitID(mUnitId);
-//        wrapper.setListener(new ATBannerListener() {
-//            @Override
-//            public void onBannerLoaded() {
-//
-//            }
-//
-//            @Override
-//            public void onBannerFailed(AdError adError) {
-//
-//            }
-//
-//            @Override
-//            public void onBannerClicked(ATAdInfo atAdInfo) {
-//
-//            }
-//
-//            @Override
-//            public void onBannerShow(ATAdInfo atAdInfo) {
-//
-//            }
-//
-//            @Override
-//            public void onBannerClose(ATAdInfo atAdInfo) {
-//
-//            }
-//
-//            @Override
-//            public void onBannerAutoRefreshed(ATAdInfo atAdInfo) {
-//
-//            }
-//
-//            @Override
-//            public void onBannerAutoRefreshFail(AdError adError) {
-//
-//            }
-//        });
-//        wrapper.loadAd();
-//        wrapper.clean();
-//
-//
 //        mAdmobBannerAd = new ATBannerView(GameLib.MAIN_ACTIVITY);
 //        // 目前只支持50dp的高度的banner
 ////        mAdmobBannerAd.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, dip2px(mContext, 50)));

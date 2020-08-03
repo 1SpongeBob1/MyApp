@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 
 import com.anythink.banner.api.ATBannerListener;
 import com.anythink.core.api.ATAdInfo;
@@ -25,6 +26,8 @@ import com.test.createwrapper.wapper.ATRewardVideoAdWrapper;
  */
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
+    private int width;
+    private int height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +48,16 @@ public class MainActivity extends AppCompatActivity {
         ATSDK.init(getApplicationContext(), "a5aa1f9deda26d", "4f7b9ac17decb9babec83aac078742c7");
         ATSDK.setNetworkLogDebug(true);
 
+        float ratio = 320 / 50f;//此比例需与TopOn后台Banner的比例相同
+        width = getResources().getDisplayMetrics().widthPixels;//定一个宽度值，比如屏幕宽度
+        height = (int) (width / ratio);
         binding.bannerAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ATBannerViewWrapper wrapper = new ATBannerViewWrapper(MainActivity.this);
                 wrapper.setUnitID("b5c0508c4c073f");
+                wrapper.setSize(width, height);
+                wrapper.setView(MainActivity.this);
                 wrapper.setListener(new ATBannerListener() {
                     @Override
                     public void onBannerLoaded() {
@@ -58,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onBannerFailed(AdError adError) {
+                        adError.printStackTrace();
                         Log.d("test", "onFailed");
                     }
 
