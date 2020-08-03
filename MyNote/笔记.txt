@@ -103,16 +103,55 @@
 				
 				
 2020-08-02
-	1、线程：
-		synchronized：关键字，是一种同步锁。
+线程相关：
+	1、synchronized：关键字，是一种同步锁。
 					修饰一个代码块：被修饰的代码块称为同步代码块，作用范围是{}括起来的代码，对象是调用这个代码块的对象。
 					修饰一个方法：被修饰的方法成为同步方法，作用范围是整个方法，对象是调用这个方法的对象。
 					修饰一个静态方法：范围是整个静态方法，作用对象是这个类的所有对象。
 					修饰一个类：作用范围是synchronized后面括号括起来的部分，作用对象是这个类的所有对象。
 	
 	
+2020-08-03
+线程相关：
+	1、并发与并行：	并行是指多个cpu实例或者多台机器同时处理一段逻辑，是真正的同时。
+					并发是指通过cpu调度算法，使用户看上去好像同时执行，但实际上在cpu层面并不是同时的。并发往往在使用场景中有公共资源，对于这个公共
+						资源的使用往往会产生瓶颈。我们会用TPS或者QPS来反映系统的处理能力。
+	2、线程安全：指在并发的情况下，该代码经过多线程调用，线程的调用顺序并不会影响结果。反之线程不安全即调用顺序会影响结果。
+	3、同步：java中的同步指通过人为的控制和调度，保证共享资源的多线程访问是线程安全的，来保证结果的准确性。线程安全的优先级高于性能。
+	4、线程在Running的过程中可能遇到的阻塞（Blocked）情况：		(https://juejin.im/entry/6844903431870611464)
+			a、调用join()或者sleep()方法，会进入阻塞状态。当sleep()结束或者join()中断或者I/O完成时会再次进入Runnable状态，等待JVM调用。
+			b、调用wait()方法，使该线程处于等待池（wait blocked pool）中，直到notify()/notifyAll()，线程被唤醒被放到锁定池（lock blocked pool），
+					释放同步锁使线程回到可运行状态（Runnable）。
+			c、对Running状态的线程加同步锁（synchronized）使其进入锁定池（lock blocked pool），同步锁被释放时进入可执行状态（Runnable）。
+			
+			此外，Runnable状态的线程是处于被调度的线程，此时的调度顺序是不一定的。Thread类中的yield()方法可以让一个Running状态的线程转为Runnable。
+			
+			new --( start() )--> Runnable --(获取cpu)--> Running --(run()结束或者异常退出)--> dead	
 	
-	
+	5、synchronized、wait、notify是任何对象都有的同步工具。
+	6、monitor：java中每个对象都有一个监视器，来检测并发代码的重入。在非多线程编码时该监视器不应发挥作用。若是在synchronized范围内，监视器发挥作用。
+				wait、notify必须存在于synchronized块中，并且，这三个关键字针对的是同一监视器（某个对象的监视器）。所以wait之后，其他线程可以进入同
+				步块执行。当某代码块不持有监视器的使用权时，去调用wait或者notify会抛出IllegalMonitorStateException。在synchronized里面调用其他对象的
+				监视器时，因为监视器的不同也会抛出此异常。
+				
+				synchronized单独使用：
+						代码块：多线程编程中，synchronized(){}中的方法获取了括号中的对象实例的monitor，如果实例相同，那么只有一个线程能够执行该块内容。、
+						直接作用于方法：获取的是当前类的monitor，如果修饰的是静态方法，则锁定该类所有的实例。
+	7、volatile：多线程的内存模型：main memory（主存），working memory（线程栈）。在处理数据时，线程会把值从主存中load到本地栈。完成操作后再save回去。
+				volatile关键字的作用即每次针对该变量的操作都会触发一次load and save。
+				针对多线程编程的变量要尽量使用final/volatile。本质上volatile就是不去缓存，直接取值。在线程安全的情况下会牺牲性能。
+				
+	8、基本线程类：	Thread类、Runnable接口、Callable接口。
+					Thread类相关方法：	public static Thread.yield()	//当前线程转让cpu控制权，让其他就绪状态的线程运行。
+										public static Thread.sleep()	//暂停一段时间
+										public join()	//在一个线程中调用另一个线程t的join方法，会让此线程t执行完毕后再执行当前线程。
+										public interrupt()	//中断一个线程，sleep和join皆可被打断。
+					
+					关于中断：	不会像stop()一样中断一个正在运行的线程。线程会时不时检测中断标识位，以判断线程是否需要被打断（中断值是否为true）。中断只会
+								影响到wait状态、sleep状态和join状态。被打断的线程会抛出InterruptedException。Thread.interrupted()检查当前线程是否发生中断
+								（返回boolean）。synchronized在获取锁的过程中不可被中断。
+								中断是一个状态，interrupt方法只是将值设为true。正常运行的程序不去检测状态，就不会终止。而wait等阻塞方法会去检测并抛出异常。
+								如果在正常运行的程序中添加while( !Thread.interrupted() )，则同样可以检测中断程序并退出代码块。
 	
 	
 	

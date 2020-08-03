@@ -20,7 +20,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private int publicNum = 0;
-    private List<String> list = new ArrayList<>();
+    final private List<String> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +31,12 @@ public class MainActivity extends AppCompatActivity {
         list.add("2");
         list.add("3");
 
-        t1.start();
-        t2.start();
-        t3.start();
+        binding.text.setOnClickListener((v)->{
+            t3.start();
+            t2.start();
+            t1.start();
+        });
+
 
     }
 
@@ -49,11 +52,15 @@ public class MainActivity extends AppCompatActivity {
 //                publicNum ++;
 //                Log.d("test1", "publicNum在线程1里面加1 = " + publicNum );
 //            }
-        while (list.size() < 10){
-            list.add(String.valueOf(list.size() + 1));
-            Log.d("testList1", String.valueOf(list));
-            Log.d("testList1", "list在thread1中添加" + (String.valueOf(list.size())) );
-        }
+            while (list.size() < 10){
+                list.add(String.valueOf(list.size() + 1));
+                Log.d("testList1", String.valueOf(list));
+                Log.d("testList1", "list在thread1中添加" + (String.valueOf(list.size())) );
+                if (list.size() == 10){
+                    notifyAll();
+                    Log.d("test", "t1 notify all");
+                }
+            }
 
         }
 
@@ -71,11 +78,24 @@ public class MainActivity extends AppCompatActivity {
 //                publicNum ++;
 //                Log.d("test2", "publicNum在线程2里面加1 = " + publicNum );
 //            }
-        while (list.size() < 20){
-            list.add(String.valueOf(list.size() + 1));
-            Log.d("testList2", String.valueOf(list));
-            Log.d("testList2", "list在thread2中添加" + (String.valueOf(list.size())) );
-        }
+            while (list.size() < 20){
+                if (list.size() == 8){
+                    try {
+                        this.wait();
+//                        t1.join();
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                list.add(String.valueOf(list.size() + 1));
+                Log.d("testList2", String.valueOf(list));
+                Log.d("testList2", "list在thread2中添加" + (String.valueOf(list.size())) );
+                if (list.size() == 20){
+                    notifyAll();
+                    Log.d("test", "t2 notify all");
+                }
+            }
 
         }
 
@@ -94,11 +114,20 @@ public class MainActivity extends AppCompatActivity {
 //                publicNum ++;
 //                Log.d("test3", "publicNum在线程3里面加1 = " + publicNum );
 //            }
-        while (list.size() < 30){
-            list.add(String.valueOf(list.size() + 1));
-            Log.d("testList3", String.valueOf(list));
-            Log.d("testList3", "list在thread3中添加" + (String.valueOf(list.size())) );
-        }
+            while (list.size() < 30){
+                if (list.size() == 5){
+                    try {
+                        this.wait();
+//                        t2.join();
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                list.add(String.valueOf(list.size() + 1));
+                Log.d("testList3", String.valueOf(list));
+                Log.d("testList3", "list在thread3中添加" + (String.valueOf(list.size())) );
+            }
         }
 
 
