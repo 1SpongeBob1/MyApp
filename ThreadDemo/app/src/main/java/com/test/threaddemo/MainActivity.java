@@ -45,12 +45,15 @@ public class MainActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
         synchronized (this){
-            while (publicNum < 10){
-                publicNum ++;
-                Log.d("test1", "publicNum在线程1里面加1 = " + publicNum );
-            }
-//            list.add(String.valueOf(list.size()));
-//            Log.d("testList1", String.valueOf(list));
+//            while (publicNum < 10){
+//                publicNum ++;
+//                Log.d("test1", "publicNum在线程1里面加1 = " + publicNum );
+//            }
+        while (list.size() < 10){
+            list.add(String.valueOf(list.size() + 1));
+            Log.d("testList1", String.valueOf(list));
+            Log.d("testList1", "list在thread1中添加" + (String.valueOf(list.size())) );
+        }
 
         }
 
@@ -64,12 +67,16 @@ public class MainActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
         synchronized (this){
-            while (publicNum < 20){
-                publicNum ++;
-                Log.d("test2", "publicNum在线程2里面加1 = " + publicNum );
-            }
-//            list.add(String.valueOf(list.size()));
-//            Log.d("testList2", String.valueOf(list));
+//            while (publicNum < 20){
+//                publicNum ++;
+//                Log.d("test2", "publicNum在线程2里面加1 = " + publicNum );
+//            }
+        while (list.size() < 20){
+            list.add(String.valueOf(list.size() + 1));
+            Log.d("testList2", String.valueOf(list));
+            Log.d("testList2", "list在thread2中添加" + (String.valueOf(list.size())) );
+        }
+
         }
 
 
@@ -83,12 +90,15 @@ public class MainActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
         synchronized (this){
-            while (publicNum < 30){
-                publicNum ++;
-                Log.d("test3", "publicNum在线程3里面加1 = " + publicNum );
-            }
-//            list.add(String.valueOf(list.size()));
-//            Log.d("testList3", String.valueOf(list));
+//            while (publicNum < 30){
+//                publicNum ++;
+//                Log.d("test3", "publicNum在线程3里面加1 = " + publicNum );
+//            }
+        while (list.size() < 30){
+            list.add(String.valueOf(list.size() + 1));
+            Log.d("testList3", String.valueOf(list));
+            Log.d("testList3", "list在thread3中添加" + (String.valueOf(list.size())) );
+        }
         }
 
 
