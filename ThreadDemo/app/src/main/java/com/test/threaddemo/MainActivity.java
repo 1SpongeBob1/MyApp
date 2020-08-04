@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.AsyncTaskLoader;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -37,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
             t1.start();
         });
 
+        binding.second.setOnClickListener((v)->{
+            startActivity(new Intent(MainActivity.this, SecondActivity.class));
+        });
 
     }
 
