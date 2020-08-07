@@ -152,6 +152,22 @@
 								（返回boolean）。synchronized在获取锁的过程中不可被中断。
 								中断是一个状态，interrupt方法只是将值设为true。正常运行的程序不去检测状态，就不会终止。而wait等阻塞方法会去检测并抛出异常。
 								如果在正常运行的程序中添加while( !Thread.interrupted() )，则同样可以检测中断程序并退出代码块。
+								
+								
+2020-08-07
+	1、在对一个List迭代的时候如果同时对其进行修改，会抛出java.util.ConcurrentModificationException。因为AbstractList中有一个迭代器的实现。AbstractList中有
+			一个modCount的成员变量，当我们进行add或者remove操作时，modCount便会+1。迭代器中还有三个成员变量：expectedModCount，表示对List修改次数的期望值，
+			初始为modCount。cursor：表示下一个要访问的元素的索引。lastRet：表示上一个访问的元素的索引。迭代器通过hasNext()方法判断cursor是否等于List的长度
+			来判断是否还有元素未访问。迭代器每次next()操作时，都会把cursor的值赋给lastRet，然后cursor++。而List的add或者remove方法会对modCount加一然后修改
+			List的长度。在进行一次操作后expectedModCount还是初始的modCount值而modCount已经改变。迭代器的next()方法最开始会有一个方法checkForComodification()
+			用来判断modCount与expectedModCount是否相等。不相等就会抛出ConcurrentModificationException异常。(https://www.cnblogs.com/dolphin0520/p/3933551.html)
+			
+	2、final：	修饰类：类无法被继承。类中所有成员方法会被隐式的指定为final。
+				修饰方法：方法无法被继承，在早期java版本会将final方法转为内嵌调用提高效率，但方法过于庞大时无法带来明显提升。在最近的java版本中，已经不需要final方法
+						来优化。因此，只有在明确禁止子类覆盖此方法是才会使用。private修饰的方法会隐式的指定为final。
+				修饰变量：如果是基本类型，此变量无法被修改；如果是引用类型，此变量无法再指向其他对象。
+				
+	3、String toString() String.valueOf()
 	
 	
 	
