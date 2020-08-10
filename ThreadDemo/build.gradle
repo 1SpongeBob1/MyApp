@@ -20,7 +20,15 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+        mavenCentral()
+        maven{
+            //私有maven仓库路径
+            url 'http://localhost:8081/repository/maven-releases/'
+        }
+        //Anythink(Core)
+        maven {
+            url 'https://dl.bintray.com/anythink/maven'
+        }
     }
 }
 

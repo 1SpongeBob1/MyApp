@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.Tools.postHttp;
+
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private int publicNum = 0;
@@ -134,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        postHttp("", "");
 
     });
 
