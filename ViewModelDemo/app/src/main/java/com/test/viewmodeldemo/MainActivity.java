@@ -4,12 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
-import android.os.Looper;
-import android.widget.Toast;
-
 import com.test.viewmodeldemo.databinding.ActivityMainBinding;
 
-import org.greenrobot.eventbus.EventBus;
+
+import static com.Tools.postHttp;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -21,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
+        postHttp("", "");
 
     }
 

@@ -48,4 +48,6 @@ dependencies {
     implementation "android.arch.lifecycle:viewmodel:1.1.1"
     // alternatively, just LiveData
     implementation "android.arch.lifecycle:livedata:1.1.1"
+
+    implementation  'com.appsflyer:androidLib:1.0.1'
 }

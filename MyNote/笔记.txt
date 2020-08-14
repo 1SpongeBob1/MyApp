@@ -169,6 +169,10 @@
 				
 	3、String toString() String.valueOf()
 	
+
+2020-08-14
+	1、AS ：clean清理的是项目缓存，invalidate cache清理的是编辑器缓存。
+	
 	
 	
 	
