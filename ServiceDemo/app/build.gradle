@@ -5,8 +5,8 @@ android {
     buildToolsVersion "30.0.0"
 
     defaultConfig {
-        applicationId "com.test.addemo"
-        minSdkVersion 17
+        applicationId "com.test.servicedemo"
+        minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -21,12 +21,6 @@ android {
         }
     }
 
-    sourceSets {
-        main {
-            res.srcDirs += 'topon_res'
-        }
-    }
-
 }
 
 dependencies {
@@ -37,13 +31,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-    //Androidx（Necessary）
-    api 'androidx.appcompat:appcompat:1.1.0'
-    api 'androidx.browser:browser:1.0.0'
-
-    //noinspection GradleCompatible
-    api 'androidx.appcompat:appcompat:1.0.0'
-    api fileTree(include: ['*.jar','*.aar'], dir: 'topon_libs')
-
 }

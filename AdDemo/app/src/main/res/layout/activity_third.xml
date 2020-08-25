@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/linear"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ThirdActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/back"
+        style="@style/ButtonStyle"
+        android:text="back"/>
+
+    <Button
+        android:id="@+id/nativeAd"
+        style="@style/ButtonStyle"
+        android:text="native ad"/>
+
+    <Button
+        android:id="@+id/bannerAd"
+        style="@style/ButtonStyle"
+        android:text="banner ad"/>
+
+    <Button
+        android:id="@+id/interstitialAd"
+        style="@style/ButtonStyle"
+        android:text="interstitial ad"/>
+
+    <Button
+        android:id="@+id/rewardAd"
+        style="@style/ButtonStyle"
+        android:text="reward ad"/>
+
+    <FrameLayout
+        android:id="@+id/_frameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
