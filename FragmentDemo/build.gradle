@@ -5,10 +5,7 @@ buildscript {
     repositories {
         google()
         jcenter()
-//        maven{
-//            //私有maven仓库路径
-//            url 'http://ato8opweb.xyz:8081/repository/maven-releases/'
-//        }
+        
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.3'
@@ -23,10 +20,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-//        maven{
-//            //私有maven仓库路径
-//            url 'http://ato8opweb.xyz:8081/repository/maven-releases/'
-//        }
+        
     }
 }
 

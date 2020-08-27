@@ -20,10 +20,10 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven{
-            //私有maven仓库路径
-            url 'http://ato8opweb.xyz:8081/repository/maven-releases/'
-        }
+//        maven{
+//            //私有maven仓库路径
+//            url 'http://ato8opweb.xyz:8081/repository/maven-releases/'
+//        }
         //Anythink(Core)
         maven {
             url 'https://dl.bintray.com/anythink/maven'

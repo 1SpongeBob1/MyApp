@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.test.viewmodeldemo.databinding.ActivityMainBinding;
 
 
-import static com.Tools.postHttp;
+//import static com.Tools.postHttp;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        postHttp("", "");
+//        postHttp("", "");
 
     }
 
