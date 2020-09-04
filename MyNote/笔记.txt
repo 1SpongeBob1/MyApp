@@ -174,5 +174,8 @@
 	1、AS ：clean清理的是项目缓存，invalidate cache清理的是编辑器缓存。
 	
 	
+2020-08-31
+	1、okhttp中response.body().string()只能使用一次，用完后会关闭response流，再操作需要再次请求。
+	
 	
 	

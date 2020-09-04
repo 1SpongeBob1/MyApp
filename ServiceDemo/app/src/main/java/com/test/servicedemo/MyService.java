@@ -1,13 +1,12 @@
 package com.test.servicedemo;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Build;
-import android.os.IBinder;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.InCallService;
@@ -85,6 +84,11 @@ public class MyService extends InCallService {
     public void onCreate() {
         super.onCreate();
         registerHeadsetReceiver();
+    }
+
+    @Override
+    public ComponentName startService(Intent service) {
+        return super.startService(service);
     }
 
     private void registerHeadsetReceiver() {
