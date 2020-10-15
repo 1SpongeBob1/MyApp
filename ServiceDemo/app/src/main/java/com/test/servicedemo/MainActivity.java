@@ -1,6 +1,8 @@
 package com.test.servicedemo;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
+import android.app.role.RoleManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,10 +11,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telecom.TelecomManager;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +26,9 @@ public class MainActivity extends AppCompatActivity {
 //    private Switch switchPhoneCall;
 
     //    private Switch switchListenCall;
-
+    private static final int REQUEST_CODE = 1;
+    private static final String TAG = "CallShow_MainActivity";
+    int sdk = Build.VERSION.SDK_INT;
     private CompoundButton.OnCheckedChangeListener switchCallCheckChangeListener;
 
     @Override
@@ -30,11 +36,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.v(TAG, "sdk version = " + sdk);
         //Android M 以上的系统则发起将本应用设为默认应用的请求
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ){
+        if (sdk >= Build.VERSION_CODES.M){// && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q
             Intent intent = new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER);
             intent.putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, getPackageName());
             startActivity(intent);
+        }
+        if (sdk >= Build.VERSION_CODES.Q){
+            RoleManager manager = (RoleManager)getSystemService(Context.ROLE_SERVICE);
+            Intent intent = manager.createRequestRoleIntent(RoleManager.ROLE_DIALER);
+//            intent.setAction(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER);
+//            intent.putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME,
+//                    getPackageName());
+            Log.v(TAG, "RoleManager.ROLE_DIALER = " + manager.isRoleAvailable(RoleManager.ROLE_DIALER));        //是否是合格role应用
+            Log.v(TAG, RoleManager.ROLE_DIALER + " = " + manager.isRoleHeld(RoleManager.ROLE_DIALER));          //是否是默认role应用
+            startActivityForResult(intent, REQUEST_CODE);
         }
 
         initView();
@@ -96,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
      * 跳转悬浮窗管理设置界面
      */
     private void openDrawOverlaySettings() {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        Log.v(TAG, "openDrawOverlaySetting");
+        if (sdk >= Build.VERSION_CODES.M && sdk < Build.VERSION_CODES.Q) {
             // Android M 以上引导用户去系统设置中打开允许悬浮窗
             // 使用反射是为了用尽可能少的代码保证在大部分机型上都可用
             try {
@@ -146,4 +164,13 @@ public class MainActivity extends AppCompatActivity {
 
         return false;
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        Log.v(TAG, "onActivityResult");
+//        if (requestCode == REQUEST_CODE){
+////            startService(new Intent(MainActivity.this, MyService.class));
+//        }
+//    }
 }

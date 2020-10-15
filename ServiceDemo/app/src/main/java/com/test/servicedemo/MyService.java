@@ -10,17 +10,20 @@ import android.os.Build;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.InCallService;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class MyService extends InCallService {
     private BroadcastReceiver headsetReceiver = null;
+    private static final String TAG = "CallShow_MyService";
 
     private Call.Callback mCall = new Call.Callback(){
         @Override
         public void onStateChanged(Call call, int state) {
             super.onStateChanged(call, state);
+            Log.v(TAG, "start callback");
                 switch (state){
                     case Call.STATE_ACTIVE : {      //通话中
                         break;
@@ -37,6 +40,7 @@ public class MyService extends InCallService {
     @Override
     public void onCallAdded(Call call) {
         super.onCallAdded(call);
+        Log.v(TAG, "onCallAdded");
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         if (audioManager.isWiredHeadsetOn()) {
             this.setAudioRoute(CallAudioState.ROUTE_WIRED_HEADSET) ;
@@ -69,6 +73,7 @@ public class MyService extends InCallService {
 
     @Override
     public void onCallRemoved(Call call) {
+        Log.v(TAG, "onCallRemoved");
         super.onCallRemoved(call);
         call.unregisterCallback(mCall);
         CallManager.call = null;
@@ -77,12 +82,14 @@ public class MyService extends InCallService {
     @Override
     public void onCallAudioStateChanged(CallAudioState audioState) {
         super.onCallAudioStateChanged(audioState);
+        Log.v(TAG, "onCallAudioStateChanged");
     }
 
 
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.v(TAG, "onCreate");
         registerHeadsetReceiver();
     }
 
@@ -92,9 +99,11 @@ public class MyService extends InCallService {
     }
 
     private void registerHeadsetReceiver() {
+        Log.v(TAG, "registerHeadsetReceiver");
         headsetReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                Log.v(TAG, "onReceive");
                 String action = intent.getAction();
                 if (action.equals(Intent.ACTION_HEADSET_PLUG)) {
                     if (intent.hasExtra("state")){
@@ -114,10 +123,11 @@ public class MyService extends InCallService {
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
+        Log.v(TAG, "onDestroy");
         if (headsetReceiver != null) {
             unregisterReceiver(headsetReceiver);
         }
-        super.onDestroy();
     }
 
 

@@ -8,6 +8,7 @@
     <!-- Needed only if your calling app reads numbers from the `PHONE_STATE`
          intent action. -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -30,7 +31,7 @@
                 android:value="true"/>
 
             <intent-filter>
-                <action android:name="android.telecom.InCallService"/>
+                <action android:name="android.permission.BIND_TELECOM_CONNECTION_SERVICE"/>
             </intent-filter>
 
         </service>

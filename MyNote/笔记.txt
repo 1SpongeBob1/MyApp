@@ -176,6 +176,9 @@
 	
 2020-08-31
 	1、okhttp中response.body().string()只能使用一次，用完后会关闭response流，再操作需要再次请求。
+
+2020-09-27
+	1、activity设置android:launchMode="singleInstance"，使得指定activity独立打开，开启新进程，不然会共用应用的进程，导致activity在应用内打开。
 	
 	
 	
