@@ -180,5 +180,15 @@
 2020-09-27
 	1、activity设置android:launchMode="singleInstance"，使得指定activity独立打开，开启新进程，不然会共用应用的进程，导致activity在应用内打开。
 	
+2020-10-29
+	1、RecyclerView获取当前显示的item的position。
+    public int getCurrentPosition(){
+        LinearLayoutManager layoutManager = (LinearLayoutManager)binding.mRecyclerView.getLayoutManager();
+        return layoutManager.findFirstCompletelyVisibleItemPosition();
+    }
+	
+	2、在Manifest文件的activity属性中添加android:excludeFromRecents属性，用于控制当前activity不在recent最近程序列表中显示。true时不显示；false显示，其中false为默认值。
+
+	
 	
 	
