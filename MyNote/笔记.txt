@@ -188,6 +188,12 @@
     }
 	
 	2、在Manifest文件的activity属性中添加android:excludeFromRecents属性，用于控制当前activity不在recent最近程序列表中显示。true时不显示；false显示，其中false为默认值。
+	
+	
+2020-11-16
+	1、Manifest文件中service的process属性：表示是否要在单独的进程中运行，参数格式"string"或":string"。前者表示进程名为string，后者表示进程名为：当前包名:string。
+		自定义来电服务（继承InCallService）不能添加此属性，不然会导致服务启动失败，并报如下错：
+			java.lang.IllegalArgumentException: Service not registered: com.android.server.telecom.callfiltering。
 
 	
 	
