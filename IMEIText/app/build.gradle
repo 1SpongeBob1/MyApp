@@ -1,12 +1,33 @@
 apply plugin: 'com.android.application'
 
+allprojects {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+        jcenter()
+        google()
+        maven { url 'https://dl.bintray.com/anythink/maven' }
+        maven {
+            url "https://dl.bintray.com/mintegral-official/Mintegral_ad_SDK_Android"
+        }
+        maven { url "https://dl.bintray.com/ironsource-mobile/android-sdk" }
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://ato8opweb.xyz:8082/repository/maven-releases/'}
+    }
+}
+
 android {
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.0"
 
     defaultConfig {
         applicationId "com.demo.imeitext"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -69,4 +90,6 @@ dependencies {
     implementation 'com.github.huburt-Hu:NewbieGuide:v2.4.0'
 
     implementation 'com.arthenica:mobile-ffmpeg-full:4.4'
+
+    implementation 'com.lib_android_game:cpdev:20201104_160000_140'
 }

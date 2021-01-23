@@ -46,6 +46,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".TestActivity"
+            android:directBootAware="true"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"/>
     </application>
 
 </manifest>

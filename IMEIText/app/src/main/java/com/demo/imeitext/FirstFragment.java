@@ -1,5 +1,8 @@
 package com.demo.imeitext;
 
+import android.app.KeyguardManager;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
@@ -7,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -77,6 +81,30 @@ public class FirstFragment extends Fragment {
         binding.firstJumpButton.setOnClickListener(v->{
             Navigation.findNavController(getView()).navigate(R.id.secondFragment);
         });
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000 * 5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                // 判断手机是否熄屏
+                if (isScreenOff(getContext())){
+                    PowerManager powerManager = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
+                    PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "callmaster:TAG");
+                    wakeLock.acquire(10*60*1000L /*10 minutes*/);
+                    Intent intent = new Intent(getContext(), TestActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                    startActivity(intent);
+                }
+            }
+        };
+
+        new Thread(runnable).start();
 
         binding.firstAdButton.setOnClickListener(v->{
             //展示广告
@@ -168,6 +196,8 @@ public class FirstFragment extends Fragment {
                 }
             }
         });
+
+
 
     }
 
@@ -288,5 +318,16 @@ public class FirstFragment extends Fragment {
 //                remove(null);
 //            }
 //        });
+    }
+
+    /**
+     * 屏幕是否黑屏（完全变黑那种，屏幕变暗不算）
+     *
+     * @param context 上下文
+     * @return 屏幕变黑，则返回true；屏幕变亮，则返回false
+     */
+    public static boolean isScreenOff(Context context) {
+        KeyguardManager manager = (KeyguardManager) context.getSystemService(context.KEYGUARD_SERVICE);
+        return manager.inKeyguardRestrictedInputMode();
     }
 }
